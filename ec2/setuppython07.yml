@@ -1,0 +1,17 @@
+---
+- name: Install python
+  hosts: all
+  tasks:
+    - name: install gcc
+      yum: name=gcc state=present
+      become: True
+    - name: Add repository
+      yum_repository:
+        name: zeromqrepo
+        description: zeromq repo
+        baseurl: http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/home:fengshuo:zeromq.repo
+      become: True
+    - name: install yum zeromq
+      yum: name=zeromq-devel state=present
+      beocme: True
+    

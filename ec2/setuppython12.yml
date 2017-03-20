@@ -1,0 +1,42 @@
+---
+- name: Install python
+  hosts: all
+  tasks:
+    - name: install gcc
+      yum: name=gcc state=present
+      become: True
+    - name: install pip
+      yum: name=python-pip state=latest
+      become: True
+    - name: upgrade pip
+      pip:
+        name: pip
+        extra_args: --upgrade
+      become: True
+    - name: fix pip location
+      copy: src=/usr/local/bin/pip  dest=/usr/sbin/ remote_src=True
+      become: True
+    - name: fix pip mode
+      file: path=/usr/sbin/pip mode=0777
+      become: True
+    - name: install ipython
+      pip: name=ipython
+      become: True
+    - name: install jupyter prerequisite
+      pip: name="Jinja2 pyzmq tornado"
+      become: True
+    - name: install jupyter
+      pip: name=jupyter
+      become: True
+    - name: update requests
+      pip: name=requests version=2.13.0
+      become: True
+    - name: install h2o prerequisite
+      pip: name="tabulate scikit-learn"
+      become: True
+    - name: uninstall h2o
+      pip: name=h2o state=absent
+      become: True
+    - name: install correct version h2o for python
+      pip: name="http://h2o-release.s3.amazonaws.com/h2o/rel-turchin/11/Python/h2o-3.8.2.11-py2.py3-none-any.whl --trusted-host h2o-release.s3.amazonaws.com"
+      become: True

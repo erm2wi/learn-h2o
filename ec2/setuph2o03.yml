@@ -1,0 +1,11 @@
+---
+- name: Copy H2o file
+  hosts: all
+  sudo: True
+  tasks:
+    - name: copy h2o.zip
+      copy: src=/home/ubuntu/github/h2o_ec2/h2o-3/ec2/h2o-3.8.2.11.zip dest=/home/ec2-user/ owner=ec2-user
+    - name: unarchive h2o
+      unarchive: src=/home/ec2-user/h2o-3.8.2.11.zip dest=/home/ec2-user/ owner=ec2-user remote_src=True
+    - name: copy h2o.jar to .
+      copy: src=/home/ec2-user/h2o-3.8.2.11/h2o.jar dest=/home/ec2-user/ owner=ec2-user remote_src=True

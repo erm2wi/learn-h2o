@@ -1,0 +1,20 @@
+---
+- name: install rstudio server 
+  hosts: all
+  remote_user: ec2-user
+  become: yes
+  tasks:
+    - name: install R core
+      yum: name=R
+    - name: create rstudio user
+      user: name=rstudiouser home=/home/rstudiouser comment="password" password="$6$sviuK0kuCZVWf$5bSDQb6aFR/wfL8uSvwB.kYwz8UyYJ1amBXwB6d2BUKbO5ZFoR7Q/QI5M8G14grzf7AvSQMiZvX3WHlEYAIWd0"
+    - name: download rstudio 
+      get_url: 
+        url: https://download2.rstudio.org/rstudio-server-rhel-1.0.136-x86_64.rpm
+        dest: /tmp/rstudio-server-rhel-1.0.136-x86_64.rpm
+    - name: install rstudio
+      yum: 
+        name: /tmp/rstudio-server-rhel-1.0.136-x86_64.rpm
+        disable_gpg_check: True
+    - name: install prerequisite for RCurl
+      yum: name=libcurl-devel

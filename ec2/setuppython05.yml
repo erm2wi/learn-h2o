@@ -1,0 +1,17 @@
+---
+- name: Install python
+  hosts: all
+  tasks:
+    - name: install gcc
+      yum: name=gcc state=present
+      become: True
+    - name: install ipython
+      pip: name=ipython
+      become: True
+    - name: isntall jupyter
+      pip: name=jupyter
+      become: True
+    - name: install h2o
+      pip: name=h2o
+      become: True
+

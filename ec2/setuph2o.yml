@@ -1,0 +1,9 @@
+---
+- name: Configure webserver
+  hosts: all
+  sudo: True
+  tasks:
+    - name: copy config file
+      copy: src=/home/ubuntu/github/h2o_ec2/h2o-3/ec2/nodes-private dest=/home/ec2-user/ owner=ec2-user
+    - name: Create folder
+      file: path=/home/ec2-user/.aws state=directory owner=ec2-user

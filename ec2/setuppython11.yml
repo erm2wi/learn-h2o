@@ -1,0 +1,31 @@
+---
+- name: Install python
+  hosts: all
+  tasks:
+    - name: install gcc
+      yum: name=gcc state=present
+      become: True
+    - name: Add repository
+      yum_repository:
+        name: zeromqrepo
+        description: zeromq repo
+        baseurl: http://download.opensuse.org/repositories/home:/fengshuo:/zeromq/CentOS_CentOS-6/home:fengshuo:zeromq.repo
+      become: True
+    - name: install yum zeromq
+      yum: name=zeromq-devel state=present
+      become: True
+    - name: install ipython
+      pip: name=ipython
+      become: True
+    - name: install jupyter prerequisite
+      pip: name="Jinja2 pyzmq tornado"
+      become: True
+    - name: isntall jupyter
+      pip: name=jupyter
+      become: True
+    - name: update requests
+      pip: name=request version=2.13.0
+      become: True
+    - name: install h2o
+      pip: name=h2o version=3.8.2.11
+      become: True
